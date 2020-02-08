@@ -105,8 +105,9 @@ def toSaveGame(saveFile, saveNr, player1Name, player1Score, player2Name, player2
                     
     openSaveGameFile.write(str(saveNr) + " ### " + saveGameName)
     openSaveGameFile.write(" " + player1Init.name + " has: " + str(player1Init.score) + " points")
-    openSaveGameFile.write(" " + player2Init.name + " has: " + str(player2Init.score) + " points")
-    print("")
+    openSaveGameFile.write(" " + player2Init.name + " has: " + str(player2Init.score) + " points" + "\n")
+    openSaveGameFile.write("")
+
                 
     openSaveGameFile.close()
     
@@ -136,10 +137,10 @@ if __name__ == "__main__":
     
     
             opt1 = asignItem()[(opt1) - 1]
-            print(player1 + " has : " + opt1)
+            print(player1Init.name + " has : " + opt1)
     
             opt2 = asignItem()[(opt2) - 1]
-            print(player2 + " has : " + opt2)
+            print(player2Init.name + " has : " + opt2)
     
             winner = theWinner(player1Init.name, player2Init.name, opt1, opt2)
         
@@ -166,13 +167,36 @@ if __name__ == "__main__":
         gamestatus = True
         
         openSaveGameFile = open(saveGameFile, "r")
-        lastline = openSaveGameFile.readlines()[-1].split()
+        fileReadLine = openSaveGameFile.readlines()
+        countLines = 0
+        openSaveGameFile.close()
+        
+        for i in fileReadLine:
+            print(i)
+            countLines +=1
+           
+        
+        ifOptOk = True
         
         
-        print(lastline)
+        while(ifOptOk):
+            userOptSaveGame = (input("Enter the number of the Saved game: "))
+            userOptSaveGame = int(userOptSaveGame) - 1
+            if(userOptSaveGame > countLines):
+                print("Select a valid number!")
+            
+            else:
+                userOptLine = fileReadLine[userOptSaveGame].split()
+                ifOptOk = False
         
-        player1Init = UserClass(lastline[3], int(lastline[5]))
-        player2Init = UserClass(lastline[7], int(lastline[9]))
+        
+        
+        player1Init = UserClass(userOptLine[3], int(userOptLine[5]))
+        player2Init = UserClass(userOptLine[7], int(userOptLine[9]))
+        
+        print("The score is: ")
+        print(player1Init.name + " has: " + str(player1Init.score) + " points")
+        print(player2Init.name + " has: " + str(player2Init.score) + " points")
         
         while(gamestatus):
     
@@ -180,10 +204,10 @@ if __name__ == "__main__":
     
     
             opt1 = asignItem()[(opt1) - 1]
-            print(player1 + " has : " + opt1)
+            print(player1Init.name + " has : " + opt1)
     
             opt2 = asignItem()[(opt2) - 1]
-            print(player2 + " has : " + opt2)
+            print(player2Init.name + " has : " + opt2)
     
             winner = theWinner(player1Init.name, player2Init.name, opt1, opt2)
         
@@ -201,8 +225,8 @@ if __name__ == "__main__":
                 saveGame = input("Do you want to save the game? Press 'y' if you want to save the game: ")
                 
                 if(saveGame.lower() == 'y'):
-                    
-                    toSaveGame(saveGameFile, saveGameNr, player1Init.name, player1Init.score, player2Init.name, player2Init.score  )
+                    countLines = countLines + 1
+                    toSaveGame(saveGameFile, countLines, player1Init.name, player1Init.score, player2Init.name, player2Init.score  )
                     
                 gamestatus = False
         
