@@ -38,7 +38,7 @@ def getMac(interface):
 
     return(macAddr)
 
-def changeMac():
+def changeMac(interfaceName, oldMac):
     validMac = False
     
     while(not validMac):
@@ -47,14 +47,24 @@ def changeMac():
         correctFormat = re.match(r"\w\w:\w\w:\w\w:\w\w:\w\w:\w\w", newMac)
         
         if(correctFormat):
+            sp.call(["ifconfig", interfaceName, "down"])
+            sp.call(["ifconfig", interfaceName, "hw", "ether", newMac])
+            sp.call(["ifconfig", interfaceName, "up"])
             
+            print("Old Mac: {} | new Mac: {}".format(oldMac, newMac))
+            validMac = True
+        else:
+            print("You entered and invalid MAC address format")
     
-
 if __name__ == "__main__":
     
     interfaces = showInterface()
     intToChange = selectInt(interfaces)
+    oldMac = getMac(intToChange)
+
+    changeMac(intToChange, oldMac)
+
     
-    print(getMac(intToChange))
+    
 
 
