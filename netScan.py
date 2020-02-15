@@ -40,10 +40,13 @@ def countMac():
         else:
             countMac[i] = 1
 
+    print(countMac)
     for j in countMac:
-        print("MAC : {} , Nr : {}".format(i,countMac[i]))
+        print("MAC : {} , Nr : {}".format(j,countMac[j]))
 
 if __name__ == "__main__":
-    findMac("10.0.2.1/24")
+    ipAddr = input("Enter the IP addreass or to search a range of IP address use IP/Netmask (ex: 10.0.2.1/24)")
+    findMac(ipAddr)
 
     countMac()
+    
