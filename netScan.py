@@ -21,8 +21,8 @@ def findMac(ip):
 
     macFile.write("IP \t MAC\t\t {} \n".format(currentDate) )
     for i in answ:
-        print(i[1].psrc + " " + i[1].hwdst)
-        macFile.write(i[1].psrc + " " + i[1].hwdst +"\n")
+        print(i[1].psrc + " " + i[1].hwsrc)
+        macFile.write(i[1].psrc + " " + i[1].hwsrc +"\n")
 
     macFile.close()
 
@@ -45,7 +45,7 @@ def countMac():
         print("MAC : {} , Nr : {}".format(j,countMac[j]))
 
 if __name__ == "__main__":
-    ipAddr = input("Enter the IP addreass or to search a range of IP address use IP/Netmask (ex: 10.0.2.1/24)")
+    ipAddr = input("Enter the IP addreass or to search a range of IP address use IP/Netmask (ex: 10.0.2.1/24): ")
     findMac(ipAddr)
 
     countMac()
